@@ -1,0 +1,608 @@
+:root {
+  --bg: #f4f6fa;
+  --card: #ffffff;
+  --text: #1c2333;
+  --muted: #5b6477;
+  --accent: #2f6fed;
+  --border: #dde2ec;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+}
+
+.header { background: var(--accent); color: #fff; padding: 24px 20px; text-align: center; }
+.header h1 { margin: 0 0 4px; font-size: 1.8rem; }
+.header p  { margin: 0 0 14px; opacity: .9; }
+.header select { padding: 6px 10px; border-radius: 6px; border: none; font-size: 1rem; }
+
+.tabs { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; padding: 16px; }
+.tab {
+  padding: 10px 18px; border: 1px solid var(--border); background: var(--card);
+  color: var(--text); border-radius: 8px; cursor: pointer; font-size: 1rem;
+}
+.tab:hover  { border-color: var(--accent); }
+.tab.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+main { max-width: 1000px; margin: 0 auto; padding: 0 16px 32px; }
+.panel { display: none; background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 24px; }
+.panel.active { display: block; }
+
+footer { text-align: center; color: var(--muted); padding: 20px; font-size: .9rem; }
+
+/* ===== Этап 2: задание А ===== */
+.hint { color: var(--muted); font-size: .95rem; }
+
+.pw-inputs { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; margin: 16px 0; }
+.pw-input {
+  padding: 10px 12px; border: 1px solid var(--border); border-radius: 8px;
+  font-family: ui-monospace, Consolas, monospace; font-size: 1rem;
+}
+.pw-input:focus { outline: 2px solid var(--accent); border-color: transparent; }
+
+.actions { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; }
+.btn {
+  padding: 10px 18px; border: none; border-radius: 8px; cursor: pointer;
+  background: var(--accent); color: #fff; font-size: 1rem;
+}
+.btn:hover { filter: brightness(1.1); }
+.btn-secondary { background: #e8edf8; color: var(--accent); }
+
+/* Таблица: если не влезает — прокручивается внутри своей рамки */
+.table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: .95rem; }
+th, td { padding: 10px 12px; border-bottom: 1px solid var(--border); text-align: left; vertical-align: top; }
+th { background: #f0f3fa; white-space: nowrap; }
+.mono { font-family: ui-monospace, Consolas, monospace; word-break: break-all; }
+
+/* Цветные «плашки» категорий */
+.badge { font-weight: 600; white-space: nowrap; }
+.lvl-0 { color: #c0392b; }
+.lvl-1 { color: #d68910; }
+.lvl-2 { color: #1e8449; }
+.lvl-3 { color: #0b6b3a; }
+
+.summary { margin-top: 20px; padding: 16px; background: #f0f6ff; border-left: 4px solid var(--accent); border-radius: 6px; }
+.summary p { margin: 6px 0; }
+
+/* ========================================
+   ЗАДАНИЕ Г. РЕЗЕРВНОЕ КОПИРОВАНИЕ
+======================================== */
+
+.task-description {
+  color: var(--muted);
+  margin-bottom: 22px;
+}
+
+.backup-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
+  margin: 20px 0;
+}
+
+.backup-card {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 17px;
+  background: #f4f6fa;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+
+.backup-label {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.backup-card strong {
+  font-size: 1.5rem;
+  color: var(--text);
+}
+
+.backup-card small {
+  color: var(--muted);
+}
+
+.backup-settings {
+  margin: 24px 0 16px;
+}
+
+.backup-settings label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.backup-settings input {
+  width: 100%;
+  max-width: 280px;
+  padding: 11px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+.field-hint {
+  color: var(--muted);
+  font-size: 0.85rem;
+  margin-top: 7px;
+}
+
+.action-btn {
+  padding: 11px 20px;
+  border: none;
+  border-radius: 8px;
+  background: var(--accent);
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.action-btn:hover {
+  opacity: 0.9;
+}
+
+.backup-results {
+  margin-top: 26px;
+  padding: 20px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: #fafbfe;
+}
+
+.backup-results h3 {
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+
+.backup-result-item {
+  padding: 16px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.backup-result-item:last-child {
+  border-bottom: none;
+}
+
+.backup-result-item h4 {
+  margin: 0 0 10px;
+}
+
+.backup-result-item strong {
+  font-size: 1.35rem;
+}
+
+.backup-formula {
+  color: var(--muted);
+  font-family: monospace;
+  font-size: 0.9rem;
+}
+
+.backup-good {
+  color: #16834a;
+  font-weight: 600;
+}
+
+.backup-bad {
+  color: #d13b3b;
+  font-weight: 600;
+}
+
+.backup-conclusion {
+  margin-top: 20px;
+  padding: 16px;
+  border-radius: 9px;
+  background: #edf3ff;
+}
+
+.backup-conclusion h4 {
+  margin-top: 0;
+}
+
+.backup-rule {
+  margin-top: 28px;
+  padding: 20px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+
+.backup-rule h3 {
+  margin-top: 0;
+}
+
+.rule-item {
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.rule-item:last-of-type {
+  border-bottom: none;
+}
+
+.rule-item p {
+  margin: 5px 0 0;
+  color: var(--muted);
+}
+
+.rule-note {
+  margin-top: 15px;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+@media (max-width: 600px) {
+  .backup-results,
+  .backup-rule {
+    padding: 14px;
+  }
+
+  .backup-card strong {
+    font-size: 1.25rem;
+  }
+}
+
+/* ========================================
+   ЗАДАНИЕ Б. ФИШИНГОВОЕ ПИСЬМО
+======================================== */
+
+.phishing-info {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+  margin: 20px 0;
+}
+
+.phishing-info > div {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 16px;
+  background: #f4f6fa;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+
+.phishing-label {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.phishing-email {
+  margin: 24px 0;
+  padding: 20px;
+  background: #fafbfe;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+
+.email-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.email-heading h3 {
+  margin: 0;
+}
+
+.email-tag {
+  padding: 5px 9px;
+  border-radius: 6px;
+  background: #e9eefb;
+  color: var(--accent);
+  font-size: 0.8rem;
+}
+
+.phishing-email label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.phishing-email textarea {
+  display: block;
+  width: 100%;
+  min-height: 180px;
+  padding: 12px;
+  resize: vertical;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font: inherit;
+  line-height: 1.5;
+}
+
+.phishing-checklist {
+  margin: 25px 0;
+}
+
+.phishing-checklist h3 {
+  margin-bottom: 5px;
+}
+
+.phishing-flag {
+  margin-top: 10px;
+  padding: 14px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  transition: background 0.2s;
+}
+
+.phishing-flag:hover {
+  background: #f7f9fd;
+}
+
+.phishing-flag label {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  cursor: pointer;
+}
+
+.phishing-flag input {
+  width: 18px;
+  height: 18px;
+  margin-top: 3px;
+  flex-shrink: 0;
+  accent-color: var(--accent);
+}
+
+.phishing-flag span {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.phishing-flag small {
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+.phishing-results {
+  margin-top: 25px;
+  padding: 20px;
+  background: #fafbfe;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+
+.phishing-results h3 {
+  margin-top: 0;
+}
+
+.phishing-score {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 15px;
+  margin: 15px 0;
+  background: #edf3ff;
+  border-radius: 9px;
+}
+
+.phishing-score strong {
+  font-size: 1.5rem;
+}
+
+.phishing-found {
+  padding-left: 22px;
+}
+
+.phishing-found li {
+  margin-bottom: 12px;
+}
+
+.phishing-found li p {
+  margin: 4px 0;
+  color: var(--muted);
+}
+
+.phishing-verdict {
+  margin-top: 20px;
+  padding: 16px;
+  background: #f1f5fb;
+  border-radius: 9px;
+}
+
+.phishing-verdict p {
+  margin-bottom: 0;
+}
+
+.phishing-warning {
+  color: #d13b3b;
+  font-weight: 600;
+}
+
+.phishing-actions {
+  margin-top: 28px;
+  padding: 20px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+
+.phishing-actions h3 {
+  margin-top: 0;
+}
+
+.phishing-actions li {
+  margin-bottom: 9px;
+  padding-left: 4px;
+}
+
+@media (max-width: 600px) {
+  .phishing-email,
+  .phishing-results,
+  .phishing-actions {
+    padding: 14px;
+  }
+}
+
+/* ========================================
+   ЗАДАНИЕ В. ПЕРСОНАЛЬНЫЕ ДАННЫЕ
+======================================== */
+
+.pdn-info {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+  margin: 20px 0;
+}
+
+.pdn-info > div {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 16px;
+  background: #f4f6fa;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+
+.pdn-label {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.pdn-notice {
+  margin: 20px 0;
+  padding: 16px;
+  background: #fff8e8;
+  border: 1px solid #ead8a8;
+  border-radius: 9px;
+}
+
+.pdn-notice p {
+  margin: 5px 0 0;
+}
+
+.pdn-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  margin: 20px 0;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+
+.pdn-table {
+  width: 100%;
+  min-width: 850px;
+  border-collapse: collapse;
+}
+
+.pdn-table th,
+.pdn-table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+
+.pdn-table th {
+  background: #f4f6fa;
+  font-size: 0.85rem;
+}
+
+.pdn-table tr:last-child td {
+  border-bottom: none;
+}
+
+.pdn-table input,
+.pdn-table select {
+  width: 100%;
+  min-width: 130px;
+  padding: 9px;
+  font: inherit;
+  font-size: 0.85rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: white;
+}
+
+.pdn-table input:focus,
+.pdn-table select:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.pdn-results {
+  margin-top: 25px;
+  padding: 20px;
+  background: #fafbfe;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+
+.pdn-results h3 {
+  margin-top: 0;
+}
+
+.pdn-summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  margin: 15px 0;
+  background: #edf3ff;
+  border-radius: 9px;
+}
+
+.pdn-summary strong {
+  font-size: 1.3rem;
+}
+
+.pdn-result-item {
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.pdn-result-item h4 {
+  margin: 0 0 8px;
+}
+
+.pdn-result-item p {
+  margin: 5px 0;
+}
+
+.pdn-highest {
+  margin-top: 20px;
+  padding: 17px;
+  background: #edf3ff;
+  border-radius: 9px;
+}
+
+.pdn-highest h4 {
+  margin-top: 0;
+}
+
+.pdn-highest strong {
+  font-size: 1.5rem;
+}
+
+.pdn-highest small {
+  display: block;
+  margin-top: 12px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.pdn-error {
+  color: #d13b3b;
+  font-weight: 600;
+}
+
+@media (max-width: 600px) {
+  .pdn-results {
+    padding: 14px;
+  }
+}

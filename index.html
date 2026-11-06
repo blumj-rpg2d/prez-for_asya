@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Аудит безопасности — лабораторная работа</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="header">
+    <h1>Аудит безопасности</h1>
+    <p>Пароли · Фишинг · Персональные данные · Бэкапы</p>
+    <label>
+      Вариант:
+      <select id="variant"></select>
+    </label>
+  </header>
+
+  <nav class="tabs">
+    <button class="tab active" data-target="task-a">А. Пароли</button>
+    <button class="tab" data-target="task-b">Б. Письмо</button>
+    <button class="tab" data-target="task-v">В. Персональные данные</button>
+    <button class="tab" data-target="task-g">Г. Бэкапы</button>
+  </nav>
+
+  <main>
+    <section id="task-a" class="panel active">
+      <h2>Задание А. Оценка паролей</h2>
+      <p class="hint">
+        Формула: <b>H = длина × log₂(N)</b>, где N — размер алфавита
+        (строчные 26, прописные 26, цифры 10, знаки 32).
+        Категории: до 40 бит — слабый, 40–59 — средний, 60–79 — сильный, 80+ — очень сильный.
+      </p>
+
+      <div class="pw-inputs">
+        <input type="text" class="pw-input" placeholder="Пароль 1" autocomplete="off">
+        <input type="text" class="pw-input" placeholder="Пароль 2" autocomplete="off">
+        <input type="text" class="pw-input" placeholder="Пароль 3" autocomplete="off">
+        <input type="text" class="pw-input" placeholder="Пароль 4" autocomplete="off">
+      </div>
+
+      <div class="actions">
+        <button id="a-fill" class="btn btn-secondary">Подставить пароли варианта</button>
+        <button id="a-calc" class="btn">Рассчитать</button>
+      </div>
+
+      <div class="table-wrap">
+        <table id="a-table">
+          <thead>
+            <tr>
+              <th>№</th><th>Пароль</th><th>Длина</th><th>Классы</th><th>N</th>
+              <th>Биты</th><th>Формально</th><th>С учётом схемы</th><th>Почему</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+
+      <div id="a-summary" class="summary"></div>
+    </section>
+
+    <section id="task-b" class="panel">
+      <h2>Задание Б. Анализ фишингового письма</h2>
+    
+      <p class="task-description">
+        Изучите электронное письмо и отметьте признаки, которые могут
+        указывать на фишинговую атаку.
+      </p>
+    
+      <!-- Информация о письме -->
+      <div class="phishing-info">
+        <div>
+          <span class="phishing-label">Номер письма по варианту</span>
+          <strong id="b-letter-number">—</strong>
+        </div>
+    
+        <div>
+          <span class="phishing-label">Объект проверки</span>
+          <strong>Интернет-магазин «Кофе-Опт»</strong>
+        </div>
+      </div>
+    
+      <!-- Текст письма -->
+      <div class="phishing-email">
+        <div class="email-heading">
+          <h3>Электронное письмо</h3>
+          <span class="email-tag">Образец для анализа</span>
+        </div>
+    
+        <label for="b-email-text">Текст письма:</label>
+    
+        <textarea
+          id="b-email-text"
+          rows="9"
+          placeholder="Вставьте сюда текст письма из вашей методички..."
+        ></textarea>
+    
+        <p class="field-hint">
+          Вставьте письмо, соответствующее выбранному варианту.
+        </p>
+      </div>
+    
+      <!-- Семь признаков фишинга -->
+      <div class="phishing-checklist">
+        <h3>Проверка 7 признаков фишинга</h3>
+    
+        <p class="field-hint">
+          Отметьте все признаки, которые обнаружили в письме.
+        </p>
+    
+        <div class="phishing-flag">
+          <label>
+            <input type="checkbox" class="b-flag" value="urgency">
+            <span>
+              <strong>1. Срочность и давление</strong>
+              <small>Требуют немедленно выполнить действие, угрожают блокировкой аккаунта.</small>
+            </span>
+          </label>
+        </div>
+    
+        <div class="phishing-flag">
+          <label>
+            <input type="checkbox" class="b-flag" value="domain">
+            <span>
+              <strong>2. Подозрительный домен</strong>
+              <small>Адрес отправителя отличается от официального домена организации.</small>
+            </span>
+          </label>
+        </div>
+    
+        <div class="phishing-flag">
+          <label>
+            <input type="checkbox" class="b-flag" value="greeting">
+            <span>
+              <strong>3. Общее обращение</strong>
+              <small>Используется обращение «Уважаемый клиент» без имени получателя.</small>
+            </span>
+          </label>
+        </div>
+    
+        <div class="phishing-flag">
+          <label>
+            <input type="checkbox" class="b-flag" value="code">
+            <span>
+              <strong>4. Запрос пароля или кода</strong>
+              <small>Просят сообщить пароль, SMS-код или код двухфакторной аутентификации.</small>
+            </span>
+          </label>
+        </div>
+    
+        <div class="phishing-flag">
+          <label>
+            <input type="checkbox" class="b-flag" value="attachment">
+            <span>
+              <strong>5. Опасное вложение</strong>
+              <small>Например, файл с двойным расширением .pdf.exe.</small>
+            </span>
+          </label>
+        </div>
+    
+        <div class="phishing-flag">
+          <label>
+            <input type="checkbox" class="b-flag" value="link">
+            <span>
+              <strong>6. Поддельная ссылка</strong>
+              <small>Видимый текст ссылки не соответствует реальному адресу перехода.</small>
+            </span>
+          </label>
+        </div>
+    
+        <div class="phishing-flag">
+          <label>
+            <input type="checkbox" class="b-flag" value="channel">
+            <span>
+              <strong>7. Неправильный канал связи</strong>
+              <small>Письмо предлагает решать важные вопросы через неофициальный канал.</small>
+            </span>
+          </label>
+        </div>
+      </div>
+    
+      <button type="button" id="b-calc" class="action-btn">
+        Проверить письмо
+      </button>
+    
+      <!-- Итог анализа -->
+      <div id="b-results" class="phishing-results" aria-live="polite">
+        <h3>Результат проверки</h3>
+        <p>Отметьте обнаруженные признаки и нажмите кнопку проверки.</p>
+      </div>
+    
+      <!-- Порядок действий -->
+      <div class="phishing-actions">
+        <h3>Как действовать при подозрении на фишинг?</h3>
+    
+        <ol>
+          <li>Не переходить по подозрительным ссылкам.</li>
+          <li>Не открывать неизвестные вложения.</li>
+          <li>Не вводить пароли и коды подтверждения.</li>
+          <li>Проверить отправителя через официальный источник.</li>
+          <li>Сообщить ответственному за информационную безопасность.</li>
+          <li>Удалить письмо после проверки или передать его специалисту.</li>
+        </ol>
+      </div>
+    </section>
+
+    <section id="task-v" class="panel">
+      <h2>Задание В. Аудит персональных данных</h2>
+    
+      <p class="task-description">
+        Определите категорию шести видов информации, укажите необходимые
+        меры обезличивания и внесите размер штрафа из методички.
+      </p>
+    
+      <div class="pdn-info">
+        <div>
+          <span class="pdn-label">Номер варианта</span>
+          <strong id="v-variant-number">—</strong>
+        </div>
+    
+        <div>
+          <span class="pdn-label">Количество проверяемых полей</span>
+          <strong>6</strong>
+        </div>
+      </div>
+    
+      <div class="pdn-notice">
+        <strong>Важно</strong>
+        <p>
+          Названия полей, категории и размеры штрафов необходимо сверять
+          с исходной таблицей вашей методички. Не указывайте вымышленные
+          значения.
+        </p>
+      </div>
+    
+      <div class="pdn-table-wrapper">
+        <table class="pdn-table">
+          <thead>
+            <tr>
+              <th>№</th>
+              <th>Поле / информация</th>
+              <th>Категория</th>
+              <th>Что обезличить</th>
+              <th>Штраф</th>
+            </tr>
+          </thead>
+    
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>
+                <input class="v-field" placeholder="Название поля">
+              </td>
+              <td>
+                <select class="v-category">
+                  <option value="">Выбрать</option>
+                  <option value="ordinary">Обычные ПДн</option>
+                  <option value="special">Специальные ПДн</option>
+                  <option value="biometric">Биометрия</option>
+                  <option value="children">Данные детей</option>
+                  <option value="indirect">Косвенные данные</option>
+                  <option value="non-pdn">Не ПДн</option>
+                </select>
+              </td>
+              <td>
+                <input class="v-anonymize" placeholder="Мера обезличивания">
+              </td>
+              <td>
+                <input class="v-fine" type="number" min="0" placeholder="Сумма">
+              </td>
+            </tr>
+    
+            <tr>
+              <td>2</td>
+              <td><input class="v-field" placeholder="Название поля"></td>
+              <td>
+                <select class="v-category">
+                  <option value="">Выбрать</option>
+                  <option value="ordinary">Обычные ПДн</option>
+                  <option value="special">Специальные ПДн</option>
+                  <option value="biometric">Биометрия</option>
+                  <option value="children">Данные детей</option>
+                  <option value="indirect">Косвенные данные</option>
+                  <option value="non-pdn">Не ПДн</option>
+                </select>
+              </td>
+              <td><input class="v-anonymize" placeholder="Мера обезличивания"></td>
+              <td><input class="v-fine" type="number" min="0" placeholder="Сумма"></td>
+            </tr>
+    
+            <tr>
+              <td>3</td>
+              <td><input class="v-field" placeholder="Название поля"></td>
+              <td>
+                <select class="v-category">
+                  <option value="">Выбрать</option>
+                  <option value="ordinary">Обычные ПДн</option>
+                  <option value="special">Специальные ПДн</option>
+                  <option value="biometric">Биометрия</option>
+                  <option value="children">Данные детей</option>
+                  <option value="indirect">Косвенные данные</option>
+                  <option value="non-pdn">Не ПДн</option>
+                </select>
+              </td>
+              <td><input class="v-anonymize" placeholder="Мера обезличивания"></td>
+              <td><input class="v-fine" type="number" min="0" placeholder="Сумма"></td>
+            </tr>
+    
+            <tr>
+              <td>4</td>
+              <td><input class="v-field" placeholder="Название поля"></td>
+              <td>
+                <select class="v-category">
+                  <option value="">Выбрать</option>
+                  <option value="ordinary">Обычные ПДн</option>
+                  <option value="special">Специальные ПДн</option>
+                  <option value="biometric">Биометрия</option>
+                  <option value="children">Данные детей</option>
+                  <option value="indirect">Косвенные данные</option>
+                  <option value="non-pdn">Не ПДн</option>
+                </select>
+              </td>
+              <td><input class="v-anonymize" placeholder="Мера обезличивания"></td>
+              <td><input class="v-fine" type="number" min="0" placeholder="Сумма"></td>
+            </tr>
+    
+            <tr>
+              <td>5</td>
+              <td><input class="v-field" placeholder="Название поля"></td>
+              <td>
+                <select class="v-category">
+                  <option value="">Выбрать</option>
+                  <option value="ordinary">Обычные ПДн</option>
+                  <option value="special">Специальные ПДн</option>
+                  <option value="biometric">Биометрия</option>
+                  <option value="children">Данные детей</option>
+                  <option value="indirect">Косвенные данные</option>
+                  <option value="non-pdn">Не ПДн</option>
+                </select>
+              </td>
+              <td><input class="v-anonymize" placeholder="Мера обезличивания"></td>
+              <td><input class="v-fine" type="number" min="0" placeholder="Сумма"></td>
+            </tr>
+    
+            <tr>
+              <td>6</td>
+              <td><input class="v-field" placeholder="Название поля"></td>
+              <td>
+                <select class="v-category">
+                  <option value="">Выбрать</option>
+                  <option value="ordinary">Обычные ПДн</option>
+                  <option value="special">Специальные ПДн</option>
+                  <option value="biometric">Биометрия</option>
+                  <option value="children">Данные детей</option>
+                  <option value="indirect">Косвенные данные</option>
+                  <option value="non-pdn">Не ПДн</option>
+                </select>
+              </td>
+              <td><input class="v-anonymize" placeholder="Мера обезличивания"></td>
+              <td><input class="v-fine" type="number" min="0" placeholder="Сумма"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    
+      <button type="button" id="v-calc" class="action-btn">
+        Проверить персональные данные
+      </button>
+    
+      <div id="v-results" class="pdn-results" aria-live="polite">
+        <h3>Результаты аудита</h3>
+        <p>Заполните шесть строк и выполните проверку.</p>
+      </div>
+    </section>
+
+    <section id="task-g" class="panel">
+      <h2>Задание Г. Резервное копирование</h2>
+    
+      <p class="task-description">
+        Расчёт необходимого объёма хранилища, времени восстановления
+        и проверка параметров RPO и RTO.
+      </p>
+    
+      <!-- Исходные параметры варианта -->
+      <div class="backup-grid">
+        <div class="backup-card">
+          <span class="backup-label">Объём данных</span>
+          <strong id="g-volume">—</strong>
+          <small>ГБ</small>
+        </div>
+    
+        <div class="backup-card">
+          <span class="backup-label">Прирост данных</span>
+          <strong id="g-growth">—</strong>
+          <small>ГБ в сутки</small>
+        </div>
+    
+        <div class="backup-card">
+          <span class="backup-label">Доступный диск</span>
+          <strong id="g-disk">—</strong>
+          <small>ГБ</small>
+        </div>
+    
+        <div class="backup-card">
+          <span class="backup-label">RPO</span>
+          <strong id="g-rpo">—</strong>
+          <small>часов</small>
+        </div>
+    
+        <div class="backup-card">
+          <span class="backup-label">RTO</span>
+          <strong id="g-rto">—</strong>
+          <small>часов</small>
+        </div>
+      </div>
+    
+      <!-- Скорость восстановления -->
+      <div class="backup-settings">
+        <label for="g-speed">
+          Скорость восстановления (МБ/с)
+        </label>
+    
+        <input
+          type="number"
+          id="g-speed"
+          min="1"
+          step="1"
+          value="100"
+        >
+    
+        <p class="field-hint">
+          Начальное значение — 100 МБ/с. При необходимости его можно изменить.
+        </p>
+      </div>
+    
+      <button type="button" id="g-calc" class="action-btn">
+        Рассчитать параметры
+      </button>
+    
+      <!-- Результаты расчётов -->
+      <div id="g-results" class="backup-results" aria-live="polite">
+        <h3>Результаты расчёта</h3>
+        <p>Нажмите «Рассчитать параметры», чтобы получить результаты.</p>
+      </div>
+    
+      <!-- Правило 3-2-1 -->
+      <div class="backup-rule">
+        <h3>Правило резервного копирования 3-2-1</h3>
+    
+        <div class="rule-item">
+          <strong>3 копии данных</strong>
+          <p>Оригинал и две резервные копии.</p>
+        </div>
+    
+        <div class="rule-item">
+          <strong>2 разных носителя</strong>
+          <p>Например, сервер и внешний накопитель.</p>
+        </div>
+    
+        <div class="rule-item">
+          <strong>1 копия вне основного помещения</strong>
+          <p>Например, облачное хранилище или удалённый сервер.</p>
+        </div>
+    
+        <p class="rule-note">
+          По имеющимся параметрам варианта нельзя подтвердить фактическое
+          выполнение правила 3-2-1. Поэтому здесь приведена рекомендация
+          по организации резервного копирования.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Выполнил: Жаныбекова Ася · Дисциплина: Введение в программную инженерию</p>
+  </footer>
+
+  <!-- Порядок важен: сначала данные, потом логика заданий, в конце главный скрипт -->
+  <script src="data.js"></script>
+  <script src="task-a.js"></script>
+  <script src="task-g.js"></script>
+  <script src="task-b.js"></script>
+  <script src="task-v.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
